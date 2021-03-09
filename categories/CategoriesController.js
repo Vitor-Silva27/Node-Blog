@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/categories", (req, res) =>{
-    res.send("Rota de categorias");
-})
+    res.send("Categories rout");
+});
 
 router.get("/admin/categories/new", (req, res) => {
-    res.send("ROTA PARA CRIAR NOVA CATEGORIA");
-})
+    res.send("Rout to create a new categorie");
+});
 
 module.exports = router;
