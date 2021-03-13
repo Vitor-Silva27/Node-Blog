@@ -36,6 +36,6 @@ app.use("/", articlesController);
 
 app.get("/", (req, res) => {
     res.render('index.ejs');
-})
+});
 
 app.listen(8080, () => console.log("Is running!"));
