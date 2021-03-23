@@ -11,6 +11,14 @@
             <form method="POST" action="/categories/save">
                 <input autocomplete="false" class="form-control" type="text" name="title" placeholder="Article title:"><br>
                 <textarea name="body" class="form-control" placeholder="Write here..." id="article"></textarea>
+                <label>Category</label>
+                <br>
+                <select name="category" class="form-control">
+                    <% categories.forEach(category => { %> 
+                        <option value="<%= category.id %> "><%= category.title %> </option>
+                    <% }) %> 
+                </select>
+                <br>
                 <button class="btn btn-success">Register</button>
             </form>
         </div>
@@ -22,6 +30,9 @@
 <script src="/tinymce/tinymce.min.js"></script>
 <script>
     tinymce.init({
-        selector: "#article"
+        selector: "#article",
+        plugins: [
+            'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'
+        ]
     })
 </script>
