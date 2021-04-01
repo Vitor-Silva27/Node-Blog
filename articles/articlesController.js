@@ -1,4 +1,4 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 const Category = require("../categories/Category");
 const Article = require("./Article");
@@ -49,12 +49,12 @@ router.post("/articles/delete", (req, res) => {
 });
 
 router.get("/admin/articles/edit/:id", (req, res) => {
-  const id = req.params.id;
+  let id = req.params.id;
   Article.findByPk(id)
     .then((article) => {
       if (article != undefined) {
         Category.findAll().then((categories) => {
-          res.render("/admin/articles/edit", { categories: categories });
+          res.render("admin/articles/edit", { categories: categories, article: article });
         });
       } else {
         res.redirect("/");
@@ -64,6 +64,30 @@ router.get("/admin/articles/edit/:id", (req, res) => {
       res.redirect("/");
       console.error(err);
     });
+});
+
+router.post("/articles/update", (req, res) => {
+    const id = req.body.id;
+    const title = req.body.title;
+    const body = req.body.body;
+    const category = req.body.category;
+
+    Article.update({
+        title: title,
+        body: body,
+        categoryId: category,
+        slug: slugify(title)
+    },{
+        where: {
+            id: id
+        }
+    }).then(() => {
+        res.redirect("/admin/articles");
+    }).catch(err => {
+        res.redirect("/");
+        console.error(err);
+    })
+
 });
 
 module.exports = router;
