@@ -90,4 +90,18 @@ router.post("/articles/update", (req, res) => {
 
 });
 
+router.get("/articles/page/:num", (req, res) => {
+    const page = req.params.num;
+    const maxArticles = 4;
+    let offset = (isNaN(page) || page <= 1)? 0 : (parseInt(page) - 1)*maxArticles;
+
+    Article.findAndCountAll({limit: maxArticles,offset: offset, order: [['id', 'DESC']]})
+    .then(articles => {
+        let next = (offset + maxArticles >= articles.count) ? false : true;
+        const result = {next: next,articles: articles}
+
+        res.json(result);
+    })
+})
+
 module.exports = router;
