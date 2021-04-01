@@ -37,22 +37,27 @@ app.use("/", categoriesController);
 app.use("/", articlesController);
 
 app.get("/", (_, res) => {
-  Article.findAll().then((articles) => {
-    res.render("index.ejs", { articles: articles });
+  Article.findAll({
+    order: [["id", "DESC"]],
+  }).then((articles) => {
+    Category.findAll().then((categories) => {
+      res.render("index", { articles: articles, categories: categories });
+    });
   });
 });
 
 app.get("/:slug", (req, res) => {
   const slug = req.params.slug;
-  articlesController
-    .findOne({
-      where: {
-        slug: slug,
-      },
-    })
+  Article.findOne({
+    where: {
+      slug: slug,
+    },
+  })
     .then((article) => {
       if (article != undefined) {
-        res.render("");
+        Category.findAll().then((categories) => {
+          res.render("article", { article: article, categories: categories });
+        });
       } else {
         res.redirect("/");
       }
@@ -60,6 +65,32 @@ app.get("/:slug", (req, res) => {
     .catch((err) => {
       res.redirect("/");
       console.log(err);
+    });
+});
+
+app.get("/category/:slug", (req, res) => {
+  const slug = req.params.slug;
+  Category.findOne({
+    where: {
+      slug: slug,
+    },
+    include: [{ model: Article }],
+  })
+    .then((category) => {
+      if (category != undefined) {
+        Category.findAll().then((categories) => {
+          res.render("index", {
+            articles: category.articles,
+            categories: categories,
+          });
+        });
+      } else {
+        res.redirect("/");
+      }
+    })
+    .catch((err) => {
+      res.redirect("/");
+      console.error(err);
     });
 });
 
