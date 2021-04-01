@@ -1,8 +1,8 @@
-<%- include ('partials/header.ejs') %> <%- include ('partials/homenavbar.ejs')
-%>
+<%- include ('partials/header.ejs') %>
+<%- include ('partials/homenavbar.ejs')%>
 
 <body>
-  <div class="container">
+  <div class="container" style="margin-bottom: 30px">
     <div class="jumbotron" style="margin-top: 30px">
       <h1 class="display-4">Welcome</h1>
       <p class="lead">
@@ -12,10 +12,12 @@
       <hr class="my-4" />
     </div>
 
-    <% articles.forEach(article => { %>
+    <% articles.forEach(article=> { %>
     <div class="card" style="margin-bottom: 15px">
       <div class="card-header">
-        <h2><%= article.title %></h2>
+        <h2>
+          <%= article.title %>
+        </h2>
       </div>
       <div class="card-body">
         <a href="/<%= article.slug %> " class="btn btn-success">read article</a>
@@ -23,6 +25,11 @@
       <br />
     </div>
     <% }) %>
+    <div class="row">
+      <div class="col col-12">
+        <a style="float: right;" class="btn btn-primary" href="/articles/page/2">next ></a>
+      </div>
+    </div>
   </div>
 </body>
 
