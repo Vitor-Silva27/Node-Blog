@@ -1,5 +1,4 @@
 <%- include ('../../partials/header.ejs') %>
-<%- include ('../../partials/navbar.ejs') %>
 
 <div class="container">
     <div class="card mt-5" style="max-width: 40%;margin: 0 auto;">
@@ -12,6 +11,10 @@
                 <input class="form-control mt-1" type="password" name="password" placeholder="********">
                 <button class="btn btn-success mt-3" type="submit">Log in</button>
             </form>
+        </div>
+        <div class="card-footer">
+            <span>Doesn't have an account? </span>
+            <a class="btn btn-outline-primary" href="/admin/users/create">Sign Up</a>
         </div>
     </div>
 </div>

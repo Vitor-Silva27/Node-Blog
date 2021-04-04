@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const User = require("./User");
 const bcrypt = require("bcryptjs");
+const { route } = require("../categories/CategoriesController");
 
 router.get("/admin/users", (req, res) => {
     User.findAll().then(users => {
@@ -71,7 +72,11 @@ router.post("/authenticate", (req, res)=>{
             res.redirect("/login");
         }
     })
+})
 
+router.get("/logout", (req, res) =>{
+    req.session.user = undefined;
+    res.redirect("/");
 })
 
 module.exports = router;
